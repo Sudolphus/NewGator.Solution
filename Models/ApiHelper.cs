@@ -5,10 +5,10 @@ namespace NewsGator.Models
 {
   class ApiHelper
   {
-    public static async Task<string> ApiCall()
+    public static async Task<string> ApiCall(string source, string endpoint)
     {
-      RestClient client = new RestClient("https://newsapi.org/v2/");
-      RestRequest request = new RestRequest($"top-headlines?sources=bbc-news,associated-press,reuters,bloomberg&apiKey={EnvironmentalVariables.NewsApiKey}", Method.GET);
+      RestClient client = new RestClient(source);
+      RestRequest request = new RestRequest(endpoint, Method.GET);
       var response = await client.ExecuteTaskAsync(request);
       return response.Content;
     }
