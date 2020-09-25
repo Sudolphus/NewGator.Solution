@@ -9,6 +9,7 @@
 .vscode/
 EnvironmentalVariables.cs
 sources.txt
+news-api-sources-objs.txt
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
