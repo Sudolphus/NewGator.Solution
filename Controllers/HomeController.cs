@@ -14,7 +14,7 @@ namespace NewsGator.Controllers
 
     public IActionResult TopHeadlines()
     {
-      List<NewsApiArticle> articleList = NewsApiArticle.GetTopHeadlines();
+      List<Article> articleList = NewsApiArticle.GetTopHeadlines();
       return View(articleList);
     }
   }

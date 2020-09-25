@@ -3,17 +3,17 @@
 }
 
 @using NewsGator.Models
-@model List<NewsGator.Models.NewsApiArticle>
+@model List<NewsGator.Models.Article>
 
 <h3>Number of Stories: @Model.Count</h3>
 <ol>
-  @foreach (NewsApiArticle article in Model)
+  @foreach (Article article in Model)
   {
     <li><ul>
       <li>Source: @article.Source</li>
       <li>Author: @article.Author</li>
       <li>Title: @article.Title</li>
-      <li>Description: @article.Description</li>
+      <li>Description: @article.Summary</li>
       <li>Url: @article.Url</li>
     </ul></li>
   }

@@ -7,30 +7,35 @@ namespace NewsGator.Models
 {
   public class NewsApiArticle
   {
-    public string Source { get; set; }
+    public JObject Source { get; set; }
     public string Author { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public string Url { get; set; }
 
-    public static List<NewsApiArticle> GetTopHeadlines()
+    public static List<Article> GetTopHeadlines()
     {
       Task<string> apiCallTask = ApiHelper.ApiCall("https://newsapi.org/v2/", $"top-headlines?sources=bbc-news,associated-press,reuters,bloomberg&apiKey={EnvironmentalVariables.NewsApiKey}");
       string result = apiCallTask.Result;
       JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(result);
       JArray jsonArticles = JsonConvert.DeserializeObject<JArray>(jsonResponse["articles"].ToString());
-      List<NewsApiArticle> articleList = new List<NewsApiArticle>();
-      foreach(JToken article in jsonArticles) 
+
+      List<Article> articleList = new List<Article>();
+      foreach(JObject jArticle in jsonArticles)
       {
-        NewsApiArticle newArticle = new NewsApiArticle();
-        newArticle.Source = JsonConvert.ToString(article["source"]["name"]);
-        newArticle.Author = JsonConvert.ToString(article["author"]);
-        newArticle.Title = JsonConvert.ToString(article["title"]);
-        newArticle.Description = JsonConvert.ToString(article["Description"]);
-        newArticle.Url = JsonConvert.ToString(article["url"]);
-        articleList.Add(newArticle);
+        string name = JsonConvert.DeserializeObject<JObject>(jArticle.GetValue("source").ToString()).GetValue("name").ToString();
+        string author = jArticle.GetValue("author").ToString();
+        string title = jArticle.GetValue("title").ToString();
+        string description = jArticle.GetValue("description").ToString();
+        string url = jArticle.GetValue("url").ToString();
+        articleList.Add(new Article(name, author, title, description, url));
       }
-      // List<NewsApiArticle> articleList = JsonConvert.DeserializeObject<List<NewsApiArticle>>(jsonArticles.ToString());
+      // List<NewsApiArticle> newsApiList = JsonConvert.DeserializeObject<List<NewsApiArticle>>(jsonArticles.ToString());
+      // foreach(NewsApiArticle article in newsApiList)
+      // {
+      //   string Name = JsonConvert.DeserializeObject<string>(article.Source.ToString());
+      //   articleList.Add(new Article(Name, article.Author, article.Title, article.Description, article.Url));
+      // }
       return articleList;
     }
   }
