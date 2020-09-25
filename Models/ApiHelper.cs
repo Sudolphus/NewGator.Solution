@@ -9,7 +9,7 @@ namespace NewsGator.Models
     {
       RestClient client = new RestClient(source);
       RestRequest request = new RestRequest(endpoint, Method.GET);
-      var response = await client.ExecuteTaskAsync(request);
+      IRestResponse response = await client.ExecuteTaskAsync(request);
       return response.Content;
     }
   }
