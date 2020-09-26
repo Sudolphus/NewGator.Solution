@@ -3,9 +3,9 @@
 }
 
 @using NewsGator.Models
-@model List<NewsGator.Models.Article>
+@model NewsGator.Models.Article[]
 
-<h3>Number of Stories: @Model.Count</h3>
+<h3>Number of Stories: @Model.Length</h3>
 <ol>
   @foreach (Article article in Model)
   {

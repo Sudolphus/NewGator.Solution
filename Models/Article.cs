@@ -16,5 +16,14 @@ namespace NewsGator.Models
       this.Summary = summary;
       this.Url = url;
     }
+
+    public Article(string source, string[] valArr)
+    {
+      this.Source = source;
+      this.Author = valArr[0];
+      this.Title = valArr[1];
+      this.Summary = valArr[2];
+      this.Url = valArr[3];
+    }
   }
 }
