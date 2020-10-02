@@ -37,5 +37,18 @@ namespace NewsGator.Models
       JObject jsonObj = jsonToken as JObject;
       return JsonConvert.DeserializeObject<JObject>(jsonObj.GetValue(childName).ToString()).GetValue(valueName).ToString();
     }
+
+    public static Article[] GetTopList(JArray jsonArticles, string name, string[] vals)
+    {
+      int count = 0;
+      Article[] articleList = new Article[100];
+      foreach(var jArticle in jsonArticles)
+      {
+        string[] valArr = ApiHelper.ValueGet(jArticle, vals);
+        articleList[count] = new Article(name, valArr);
+        count++;
+      } 
+      return articleList;
+    }
   }
 }
