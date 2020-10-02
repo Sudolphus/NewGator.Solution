@@ -68,7 +68,7 @@ namespace NewsGator.Tests
     }
 
     [TestMethod]
-    public void NewsApi_ShouldInstantiateACallToAssociatedPress_ReutersNewsObject()
+    public void NewsApi_ShouldInstantiateACallToReuters_ReutersNewsObject()
     {
       NewsApi r = new NewsApi("Reuters");
       Assert.AreEqual(typeof(NewsApi), r.GetType());
@@ -86,7 +86,7 @@ namespace NewsGator.Tests
     }
 
     [TestMethod]
-    public void NewsApi_ShouldInstantiateACallToAssociatedPress_BloombergNewsObject()
+    public void NewsApi_ShouldInstantiateACallToBloomberg_BloombergNewsObject()
     {
       NewsApi b = new NewsApi("Bloomberg");
       Assert.AreEqual(typeof(NewsApi), b.GetType());
@@ -101,6 +101,15 @@ namespace NewsGator.Tests
       NewsApi b = new NewsApi("Bloomberg");
       string endpoint = $"top-headlines?sources=bloomberg&pageSize=100&apiKey={EnvironmentalVariables.NewsApiKey}";
       Assert.AreEqual(endpoint, b.GetTopHeadlinesEndpoint());
+    }
+
+    [TestMethod]
+    public void NewYorkTimes_CreateANewYorkTimesObject_NewYorkTimes()
+    {
+      NewYorkTimes nyt = new NewYorkTimes();
+      Assert.AreEqual(typeof(NewYorkTimes), nyt.GetType());
+      Assert.AreEqual(nyt.Name, "New York Times");
+      Assert.AreEqual(nyt.Target, "https://api.nytimes.com/svc/");
     }
   }
 }
