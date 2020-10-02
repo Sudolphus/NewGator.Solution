@@ -27,6 +27,11 @@ namespace NewsGator.Models
       }
     }
 
+    public string GetTopHeadlinesEndpoint()
+    {
+      return $"top-headlines?sources={Code}&pageSize=100&apiKey={EnvironmentalVariables.NewsApiKey}";
+    }
+
     public Article[] GetTopHeadlines()
     {
       string endpoint = $"top-headlines?sources={Code}&pageSize=100&apiKey={EnvironmentalVariables.NewsApiKey}";
