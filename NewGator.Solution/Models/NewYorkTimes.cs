@@ -1,6 +1,6 @@
 namespace NewsGator.Models
 {
-  public class NewYorkTimes
+  public class NewYorkTimes : ITopHeadlines
   {
     public string Name { get; } = "New York Times";
     public string Target { get; } = "https://api.nytimes.com/svc/";

@@ -2,7 +2,7 @@
 
 namespace NewsGator.Models
 {
-  public class NewsApi
+  public class NewsApi : ITopHeadlines
   {
     public string Target { get; } = "https://newsapi.org/v2/";
     public string Name { get; }
