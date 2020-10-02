@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NewsGator.Models
@@ -11,7 +12,7 @@ namespace NewsGator.Models
     {
       RestClient client = new RestClient(source);
       RestRequest request = new RestRequest(endpoint, Method.GET);
-      IRestResponse response = await client.ExecuteTaskAsync(request);
+      IRestResponse response = await client.ExecuteAsync(request);
       return response.Content;
     }
 
@@ -45,8 +46,8 @@ namespace NewsGator.Models
         string[] valArr = ApiHelper.ValueGet(jArticle, vals);
         articleList[count] = new Article(name, valArr);
         count++;
-      } 
-      return articleList;
+      }
+      return articleList.Where<Article>(article => article != null) as Article[];
     }
   }
 }
