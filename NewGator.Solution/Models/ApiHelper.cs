@@ -22,9 +22,8 @@ namespace NewsGator.Models
       return jsonArray;
     }
 
-    public static string[] ValueGet(JToken jsonToken, string[] values)
+    public static string[] ValueGet(JObject jsonObj, string[] values)
     {
-      JObject jsonObj = jsonToken as JObject;
       string[] returnArray = new string[values.Length];
       for (int i = 0; i < values.Length; i++) {
         returnArray[i] = jsonObj.GetValue(values[i]).ToString();
@@ -32,9 +31,8 @@ namespace NewsGator.Models
       return returnArray;
     }
 
-    public static string ValueGet(JToken jsonToken, string childName, string valueName)
+    public static string ValueGet(JObject jsonObj, string childName, string valueName)
     {
-      JObject jsonObj = jsonToken as JObject;
       return JsonConvert.DeserializeObject<JObject>(jsonObj.GetValue(childName).ToString()).GetValue(valueName).ToString();
     }
 
@@ -42,7 +40,7 @@ namespace NewsGator.Models
     {
       int count = 0;
       Article[] articleList = new Article[100];
-      foreach(var jArticle in jsonArticles)
+      foreach(JObject jArticle in jsonArticles)
       {
         string[] valArr = ApiHelper.ValueGet(jArticle, vals);
         articleList[count] = new Article(name, valArr);
