@@ -12,9 +12,24 @@ namespace NewsGator.Controllers
       List<Article> articles = new List<Article>();
       foreach (ITopHeadlines source in headlines)
       {
-        Article[] articleList = source.GetTopHeadlines();
+        IEnumerable<Article> articleList = source.GetTopHeadlines();
         articles.AddRange(articleList);
       }
+      return View(articles);
+    }
+
+    public IActionResult List(string sourceName)
+    {
+      ITopHeadlines source;
+      if (sourceName == "New York Times")
+      {
+        source = new NewYorkTimes();
+      }
+      else
+      {
+        source = new NewsApi(sourceName);
+      }
+      List<Article> articles = source.GetTopHeadlines();
       return View(articles);
     }
   }

@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+  ViewData["Title"] = "List";
+}
+
+@using NewsGator.Models;
+@using System.Collections.Generic;
+@model List<Article>;
+
+<ol>
+  @foreach(Article article in Model)
+  {
+    <li><ul>
+      <li>Title: @article.Title</li> 
+      <li>Source: @article.Source</li>
+      <li>Author: @article.Author</li>
+      <li>Description: @article.Summary</li>
+      <li>URL: @article.Url</li>
+    </ul></li>
+  }
+</ol>

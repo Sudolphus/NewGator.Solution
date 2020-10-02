@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace NewsGator.Models
 {
   public class Article
@@ -29,6 +31,6 @@ namespace NewsGator.Models
 
   interface ITopHeadlines
   {
-    Article[] GetTopHeadlines();
+    List<Article> GetTopHeadlines();
   }
 }

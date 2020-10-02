@@ -1,4 +1,6 @@
-// using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NewsGator.Models
 {
@@ -32,13 +34,13 @@ namespace NewsGator.Models
       return $"top-headlines?sources={Code}&pageSize=100&apiKey={EnvironmentalVariables.NewsApiKey}";
     }
 
-    public Article[] GetTopHeadlines()
+    public List<Article> GetTopHeadlines()
     {
       string endpoint = $"top-headlines?sources={Code}&pageSize=100&apiKey={EnvironmentalVariables.NewsApiKey}";
-      var apiCallTask = ApiHelper.ApiCall(Target, endpoint);
-      var jsonArticles = ApiHelper.Deserialize(apiCallTask.Result, "articles");
+      Task<string> apiCallTask = ApiHelper.ApiCall(Target, endpoint);
+      JArray jsonArticles = ApiHelper.Deserialize(apiCallTask.Result, "articles");
       string[] vals = new string[4]{ "author", "title", "description", "url" };
-      Article[] articleList = ApiHelper.GetTopList(jsonArticles, Name, vals);
+      List<Article> articleList = ApiHelper.GetTopList(jsonArticles, Name, vals);
       return articleList;
     }
   }

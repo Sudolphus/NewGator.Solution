@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NewsGator.Models
@@ -37,17 +37,15 @@ namespace NewsGator.Models
       return JsonConvert.DeserializeObject<JObject>(jsonObj.GetValue(childName).ToString()).GetValue(valueName).ToString();
     }
 
-    public static Article[] GetTopList(JArray jsonArticles, string name, string[] vals)
+    public static List<Article> GetTopList(JArray jsonArticles, string name, string[] vals)
     {
-      int count = 0;
-      Article[] articleList = new Article[100];
+      List<Article> articles = new List<Article>();
       foreach(JObject jArticle in jsonArticles)
       {
         string[] valArr = ApiHelper.ValueGet(jArticle, vals);
-        articleList[count] = new Article(name, valArr);
-        count++;
+        articles.Add(new Article(name, valArr));
       }
-      return articleList.Where<Article>(article => article != null) as Article[];
+      return articles;
     }
   }
 }

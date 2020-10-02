@@ -1,7 +1,15 @@
 ﻿@{
+  Layout = "_Layout";
   ViewData["Title"] = "Home Page";
 }
 
 <h3>If You Can See This, Then The Render View is Working</h3>
 
-@Html.ActionLink("Get APIS", "Index", "Articles")
+<ul>
+  <li>@Html.ActionLink("Get APIS", "Index", "Articles")</li>
+  <li>@Html.ActionLink("Get NYT APIs", "List", "Articles", new { sourceName = "New York Times"})</li>
+  <li>@Html.ActionLink("Get BBC News APIs", "List", "Articles", new { sourceName = "BBC News"})</li>
+  <li>@Html.ActionLink("Get Associated Press APIs", "List", "Articles", new { sourceName = "Associated Press"})</li>
+  <li>@Html.ActionLink("Get Reuters APIs", "List", "Articles", new { sourceName = "Reuters"})</li>
+  <li>@Html.ActionLink("Get Bloomberg APIs", "List", "Articles", new { sourceName = "Bloomberg"})</li>
+</ul>

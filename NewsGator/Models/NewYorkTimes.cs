@@ -1,3 +1,7 @@
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace NewsGator.Models
 {
   public class NewYorkTimes : ITopHeadlines
@@ -5,13 +9,13 @@ namespace NewsGator.Models
     public string Name { get; } = "New York Times";
     public string Target { get; } = "https://api.nytimes.com/svc/";
 
-    public Article[] GetTopHeadlines()
+    public List<Article> GetTopHeadlines()
     {
       string endpoint = $"news/v3/content/all/all.json?api-key={EnvironmentalVariables.NewYorkTimesKey}";
-      var apiCallTask = ApiHelper.ApiCall(Target, endpoint);
-      var jsonArticles = ApiHelper.Deserialize(apiCallTask.Result, "results");
+      Task<string> apiCallTask = ApiHelper.ApiCall(Target, endpoint);
+      JArray jsonArticles = ApiHelper.Deserialize(apiCallTask.Result, "results");
       string[] vals = new string[4]{ "byline", "title", "abstract", "url" };
-      Article[] articleList = ApiHelper.GetTopList(jsonArticles, Name, vals);
+      List<Article> articleList = ApiHelper.GetTopList(jsonArticles, Name, vals);
       return articleList;
     }
   }
