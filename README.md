@@ -10,7 +10,7 @@
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
 [![GitHub Issues](https://img.shields.io/github/issues/Sudolphus/NewGator.Solution.svg)](https://github.com/Sudolphus/NewGator.Solutionissues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Sudolphus/NewGator.Solution.svg)](https://github.com/Sudolphus/NewGator.Solution/pulls)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
 
 </div>
 
