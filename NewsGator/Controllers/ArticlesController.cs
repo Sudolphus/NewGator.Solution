@@ -8,7 +8,7 @@ namespace NewsGator.Controllers
   {
     public IActionResult Index()
     {
-      ITopHeadlines[] headlines = new ITopHeadlines[5]{ new NewsApi("BBC News"), new NewsApi("Associated Press"), new NewsApi("Reuters"), new NewsApi("Bloomberg"), new NewYorkTimes() };
+      ITopHeadlines[] headlines = new ITopHeadlines[9]{ new NewsApi("BBC News"), new NewsApi("Associated Press"), new NewsApi("Reuters"), new NewsApi("Bloomberg"), new NewYorkTimes(), new NewsApi("CBS News"), new NewsApi("Wall Street Journal"), new NewsApi("Washington Post"), new NewsApi("Politico") };
       List<Article> articles = new List<Article>();
       foreach (ITopHeadlines source in headlines)
       {
