@@ -1,17 +1,16 @@
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace NewsGator.Models
 {
-  public class NewsApi : ITopHeadlines
+  public class NewsApi : Source
   {
-    public string Target { get; } = "https://newsapi.org/v2/";
-    public string Name { get; }
     public string Code { get; }
 
     public NewsApi(string name) {
+      this.Target = "https://newsapi.org/v2/";
       this.Name = name;
+      this.AuthorName = "author";
+      this.TitleName = "title";
+      this.SummaryName = "description";
+      this.UrlName = "url";
       switch(name)
       {
         case "BBC News":
@@ -46,13 +45,10 @@ namespace NewsGator.Models
       return $"top-headlines?sources={Code}&pageSize=20&apiKey={EnvironmentalVariables.NewsApiKey}";
     }
 
-    public List<Article> GetTopHeadlines()
+    public override Article[] GetTopHeadlines()
     {
-      string endpoint = $"top-headlines?sources={Code}&pageSize=100&apiKey={EnvironmentalVariables.NewsApiKey}";
-      Task<string> apiCallTask = ApiHelper.ApiCall(Target, endpoint);
-      JArray jsonArticles = ApiHelper.Deserialize(apiCallTask.Result, "articles");
-      string[] vals = new string[4]{ "author", "title", "description", "url" };
-      List<Article> articleList = ApiHelper.GetTopList(jsonArticles, Name, vals);
+      string endpoint = this.GetTopHeadlinesEndpoint();
+      Article[] articleList = this.ConvertToList(endpoint, "articles");
       return articleList;
     }
   }

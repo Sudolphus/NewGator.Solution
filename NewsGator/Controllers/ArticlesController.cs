@@ -8,9 +8,9 @@ namespace NewsGator.Controllers
   {
     public IActionResult Index()
     {
-      ITopHeadlines[] headlines = new ITopHeadlines[9]{ new NewsApi("BBC News"), new NewsApi("Associated Press"), new NewsApi("Reuters"), new NewsApi("Bloomberg"), new NewYorkTimes(), new NewsApi("CBS News"), new NewsApi("Wall Street Journal"), new NewsApi("Washington Post"), new NewsApi("Politico") };
+      Source[] headlines = new Source[9]{ new NewsApi("BBC News"), new NewsApi("Associated Press"), new NewsApi("Reuters"), new NewsApi("Bloomberg"), new NewYorkTimes(), new NewsApi("CBS News"), new NewsApi("Wall Street Journal"), new NewsApi("Washington Post"), new NewsApi("Politico") };
       List<Article> articles = new List<Article>();
-      foreach (ITopHeadlines source in headlines)
+      foreach (Source source in headlines)
       {
         IEnumerable<Article> articleList = source.GetTopHeadlines();
         articles.AddRange(articleList);
@@ -20,7 +20,7 @@ namespace NewsGator.Controllers
 
     public IActionResult List(string sourceName)
     {
-      ITopHeadlines source;
+      Source source;
       if (sourceName == "New York Times")
       {
         source = new NewYorkTimes();
@@ -29,7 +29,7 @@ namespace NewsGator.Controllers
       {
         source = new NewsApi(sourceName);
       }
-      List<Article> articles = source.GetTopHeadlines();
+      Article[] articles = source.GetTopHeadlines();
       return View(articles);
     }
   }

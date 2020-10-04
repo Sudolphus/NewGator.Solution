@@ -28,9 +28,4 @@ namespace NewsGator.Models
       this.Url = valArr[3];
     }
   }
-
-  interface ITopHeadlines
-  {
-    List<Article> GetTopHeadlines();
-  }
 }
