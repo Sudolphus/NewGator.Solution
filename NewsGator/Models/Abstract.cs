@@ -8,10 +8,10 @@ namespace NewsGator.Models
   {
     public string Name { get; set; }
     public string Target { get; set; }
-    public string AuthorName { get; set; }
-    public string TitleName { get; set; }
-    public string SummaryName { get; set; }
-    public string UrlName { get; set; }
+    protected string AuthorName { get; set; }
+    protected string TitleName { get; set; }
+    protected string SummaryName { get; set; }
+    protected string UrlName { get; set; }
 
     public abstract Article[] GetTopHeadlines();
     
