@@ -114,5 +114,19 @@ namespace NewsGator.Tests
       List<Article> results = Article.Find(new string[6]{"test1", "author", "title", "summary", "url", "10/5/2020"});
       List<Article> testList = new List<Article> { testArticle };
     }
+
+    [TestMethod]
+    public void Find_CanHandleNoFilters_ArticleList()
+    {
+      string[] valArr = new string[4]{"author", "title", "summary", "url"};
+      string[] valArr2 = new string[4]{"author2", "title2", "summary2", "url2"};
+      Article testArticle = new Article("test1", valArr);
+      Article testArticle2 = new Article("test2", valArr2);
+      testArticle.Save();
+      testArticle2.Save();
+      List<Article> results = Article.Find(new string[6]{null, null, null, null, null, null});
+      List<Article> testList = new List<Article>{ testArticle, testArticle2 };
+      CollectionAssert.AreEqual(results, testList);
+    }
   }
 }

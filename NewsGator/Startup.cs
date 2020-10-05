@@ -33,6 +33,26 @@ namespace NewsGator
 
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+      services.AddSwaggerDocument(config =>
+      {
+        config.PostProcess = document =>
+        {
+          document.Info.Version = "v1";
+          document.Info.Title = "NewsGator API";
+          document.Info.Description = "An API for retriving articles from the database";
+          document.Info.Contact = new NSwag.OpenApiContact
+          {
+            Name = "Micheal Hansen",
+            Url = "https://github.com/sudolphus"
+          };
+          document.Info.License = new NSwag.OpenApiLicense
+          {
+            Name = "Use under MIT",
+            Url = "https://opensource.org/license/MIT"
+          };
+        };
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +67,9 @@ namespace NewsGator
       app.UseStaticFiles();
       // app.UseCookiePolicy();
 
+
+      app.UseOpenApi();
+      app.UseSwaggerUi3();
       app.UseMvc(routes =>
       {
         routes.MapRoute(
