@@ -7,10 +7,7 @@ namespace NewsGator.Models
     public NewsApi(string name) {
       this.Target = "https://newsapi.org/v2/";
       this.Name = name;
-      this.AuthorName = "author";
-      this.TitleName = "title";
-      this.SummaryName = "description";
-      this.UrlName = "url";
+      this.Vals = new string[4] { "author", "title", "description", "url"};
       switch(name)
       {
         case "BBC News":

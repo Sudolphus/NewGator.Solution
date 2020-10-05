@@ -8,11 +8,7 @@ namespace NewsGator.Models
   {
     public string Name { get; set; }
     public string Target { get; set; }
-    protected string AuthorName { get; set; }
-    protected string TitleName { get; set; }
-    protected string SummaryName { get; set; }
-    protected string UrlName { get; set; }
-
+    protected string[] Vals { get; set; }
     public abstract Article[] GetTopHeadlines();
     
     protected Article[] ConvertToList(string endpoint, string arrayName)
@@ -36,10 +32,9 @@ namespace NewsGator.Models
 
     private string[] ValueGet(JObject jsonObj)
     {
-      string[] values = new string[4]{ AuthorName, TitleName, SummaryName, UrlName };
-      string[] returnArray = new string[values.Length];
-      for (int i = 0; i < values.Length; i++) {
-        returnArray[i] = jsonObj.GetValue(values[i]).ToString();
+      string[] returnArray = new string[4];
+      for (int i = 0; i < 4; i++) {
+        returnArray[i] = jsonObj.GetValue(this.Vals[i]).ToString();
       }
       return returnArray;
     }

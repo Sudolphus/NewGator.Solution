@@ -6,10 +6,7 @@ namespace NewsGator.Models
     {
       this.Name = "New York Times";
       this.Target = "https://api.nytimes.com/svc/";
-      this.AuthorName = "byline";
-      this.TitleName = "title";
-      this.SummaryName = "abstract";
-      this.UrlName = "url";
+      this.Vals = new string[4] {"byline", "title", "abstract", "url"};
     }
     public override Article[] GetTopHeadlines()
     {

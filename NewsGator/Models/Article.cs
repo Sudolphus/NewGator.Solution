@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace NewsGator.Models
 {
   public class Article
