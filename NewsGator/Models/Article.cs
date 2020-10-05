@@ -34,6 +34,44 @@ namespace NewsGator.Models
       this.Url = valArr[3];
     }
 
+    public override bool Equals(System.Object otherArticle)
+    {
+      if (!(otherArticle is Article))
+      {
+        return false;
+      }
+      else
+      {
+        Article newArticle = (Article) otherArticle;
+        bool equalityFlag = true;
+        if (this.Source != newArticle.Source)
+        {
+          equalityFlag = false;
+        }
+        else if (this.Author != newArticle.Author)
+        {
+          equalityFlag = false;
+        }
+        else if (this.Title != newArticle.Title)
+        {
+          equalityFlag = false;
+        }
+        else if (this.Summary != newArticle.Summary)
+        {
+          equalityFlag = false;
+        }
+        else if (this.Url != newArticle.Url)
+        {
+          equalityFlag = false;
+        }
+        return equalityFlag;
+      }
+    }
+
+    public override int GetHashCode()
+    {
+      return ArticlesId;
+    }
     public static void ClearAll()
     {
       MySqlConnection conn = DB.OpenConnection();
@@ -60,6 +98,11 @@ namespace NewsGator.Models
       }
       DB.CloseConnection(conn);
       return allArticles;
+    }
+
+    public void Save()
+    {
+      
     }
   }
 }
