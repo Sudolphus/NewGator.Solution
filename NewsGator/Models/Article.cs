@@ -111,6 +111,61 @@ namespace NewsGator.Models
       cmd.Parameters.Add("@articleUrl", MySqlDbType.VarChar).Value = this.Url;
       cmd.Parameters.Add("@articleDate", MySqlDbType.VarChar).Value = DateTime.Now.ToString("d");
       cmd.ExecuteNonQuery();
+      DB.CloseConnection(conn);
+    }
+
+    public static Article Find(int id)
+    {
+      MySqlConnection conn = DB.OpenConnection();
+      MySqlCommand cmd = DB.CreateCommand(conn, @"SELECT * FROM articles WHERE articlesId = @id;");
+      cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      Article foundArticle = null;
+      while(rdr.Read())
+      {
+        int articlesId = rdr.GetInt32(0);
+        string source = rdr.GetString(1);
+        string author = rdr.GetString(2);
+        string title = rdr.GetString(3);
+        string summary = rdr.GetString(4);
+        string url = rdr.GetString(5);
+        string date = rdr.GetString(6);
+        foundArticle = new Article(articlesId, source, author, title, summary, url, date);
+      }
+      DB.CloseConnection(conn);
+      return foundArticle;
+    }
+
+    public static List<Article> Find(string[] filters)
+    {
+      List<Article> foundArticles = new List<Article>();
+      string[] filterNames = new string[6] {"source", "author", "title", "summary", "url", "date"};
+      MySqlConnection conn = DB.OpenConnection();
+      string commandString = @"SELECT * FROM articles";
+      if (filters[0] != null)
+      {
+        commandString += $" WHERE {filterNames[0]} = @{filters[0]}";
+      }
+      commandString += ";";
+      MySqlCommand cmd = DB.CreateCommand(conn, commandString);
+      if (filters[0] != null)
+      {
+        cmd.Parameters.Add($"@{filters[0]}", MySqlDbType.VarChar).Value = $"{filters[0]}";
+      }
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while (rdr.Read())
+      {
+        int articlesId = rdr.GetInt32(0);
+        string source = rdr.GetString(1);
+        string author = rdr.GetString(2);
+        string title = rdr.GetString(3);
+        string summary = rdr.GetString(4);
+        string url = rdr.GetString(5);
+        string date = rdr.GetString(6);
+        foundArticles.Add(new Article(articlesId, source, author, title, summary, url, date));
+      }
+      DB.CloseConnection(conn);
+      return foundArticles;
     }
   }
 }
