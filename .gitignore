@@ -11,6 +11,7 @@ EnvironmentalVariables.cs
 sources.txt
 news-api-sources-objs.txt
 news-api-sample-response.txt
+gator.sql
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

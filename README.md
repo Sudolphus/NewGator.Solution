@@ -51,13 +51,29 @@ For the back end:
 1. Start by acquiring the repo, by either clicking the download button, or running `git clone https://github.com/Sudolphus/NewsGator.Solution`
 2. You'll also need MySQL Server and .NET Framework installed (linked above)
 3. Once .NET is installed, navigate into the NewsGator directory in your terminal of choice and acquire the necessary packages with `dotnet restore`
-4. Install the database with `dotnet ef database update`. For this step to work, you'll need to update the {password} in appsettings.json with your MySQL password.
-5. You'll need to get api keys for [NewsApi](https://newsapi.org/docs/get-started) and the [New York Times](https://developer.nytimes.com/), and add them to an EnvironmentalVariables.cs file in the appropriate places:
+4. Install the schema for holding article data. If you have MySQL Workbench or similar, you can import the schema from the included `gator.sql` file. Otherwise, it can be built by running the following code in MySQL Server:
+  ```
+  CREATE_DATABASE `gator`;
+  USE `gator`;
+  DROP TABLE IF EXISTS "articles";
+  CREATE TABLE "articles" (
+  "articlesId" int NOT NULL AUTO_INCREMENT,
+  "source" varchar(255) DEFAULT NULL,
+  "author" varchar(255) DEFAULT NULL,
+  "title" varchar(255) DEFAULT NULL,
+  "summary" varchar(255) DEFAULT NULL,
+  "url" varchar(255) DEFAULT NULL,
+  "date" varchar(255) NOT NULL,
+  PRIMARY KEY ("articlesId")
+  );
+  ```
+5. You'll need to set up an EnvironmentalVariables.cs file to hold your password. You'll need to include your MySql Server password. You'll also need to get api keys for [NewsApi](https://newsapi.org/docs/get-started) and the [New York Times](https://developer.nytimes.com/). Then, create the file like this:
 ```
 namespace NewsGator.Models
 {
   public static class EnvironmentalVariables
   {
+    public static string SqlPassword { get; } = (Your MySQL Server Password);
     public static string NewsApiKey { get; } = (Your News API Key);
     public static string NewYorkTimesKey { get; } = (Your New York Times Key);
   }
