@@ -142,15 +142,21 @@ namespace NewsGator.Models
       string[] filterNames = new string[6] {"source", "author", "title", "summary", "url", "date"};
       MySqlConnection conn = DB.OpenConnection();
       string commandString = @"SELECT * FROM articles";
-      if (filters[0] != null)
+      for (int i = 0; i <= 5; i++)
       {
-        commandString += $" WHERE {filterNames[0]} = @{filters[0]}";
+        if (filters[i] != null)
+        {
+          commandString += $" WHERE {filterNames[i]} = @{filters[i]}";
+        }
       }
       commandString += ";";
       MySqlCommand cmd = DB.CreateCommand(conn, commandString);
-      if (filters[0] != null)
+      for (int i = 0; i <= 5; i++)
       {
-        cmd.Parameters.Add($"@{filters[0]}", MySqlDbType.VarChar).Value = $"{filters[0]}";
+        if (filters[i] != null)
+        {
+          cmd.Parameters.Add($"@{filters[i]}", MySqlDbType.VarChar).Value = $"{filters[i]}";
+        }
       }
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
       while (rdr.Read())

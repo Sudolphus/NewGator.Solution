@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace NewsGator.Tests
 {
   [TestClass]
+  // public class DatabaseTests
   public class DatabaseTests : IDisposable
   {
     public void Dispose()
@@ -62,9 +63,28 @@ namespace NewsGator.Tests
       Article testArticle2 = new Article("test2", valArr2);
       testArticle.Save();
       testArticle2.Save();
-      string[] filters = new string[6]{"test1", null, null, null, null, null};
-      List<Article> results = Article.Find(filters);
+      // string[] filters = new string[6]{"test1", null, null, null, null, null};
+      List<Article> results = Article.Find(new string[6]{"test1", null, null, null, null, null});
       List<Article> testList = new List<Article>{ testArticle };
+      CollectionAssert.AreEqual(results, testList);
+    }
+
+    [DataRow(new string[6]{"test1", null, null, null, null, null})]
+    [DataRow(new string[6]{null, "author", null, null, null, null})]
+    [DataRow(new string[6]{null, null, "title", null, null, null})]
+    [DataRow(new string[6]{null, null, null, "summary", null, null})]
+    [DataRow(new string[6]{null, null, null, null, "url", null})]
+    [DataTestMethod]
+    public void Find_CanFilterByAnyField_ArticleList(string[] filters)
+    {
+      string[] valArr = new string[4]{"author", "title", "summary", "url"};
+      string[] valArr2 = new string[4]{"author2", "title2", "summary2", "url2"};
+      Article testArticle = new Article("test1", valArr);
+      Article testArticle2 = new Article("test2", valArr2);
+      testArticle.Save();
+      testArticle2.Save();
+      List<Article> results = Article.Find(filters);
+      List<Article> testList = new List<Article> { testArticle };
       CollectionAssert.AreEqual(results, testList);
     }
   }
