@@ -146,7 +146,7 @@ namespace NewsGator.Models
       {
         if (filters[i] != null)
         {
-          commandString += $" WHERE {filterNames[i]} = @{filters[i]}";
+          commandString += $" WHERE {filterNames[i]} = @{filterNames[i]}";
         }
       }
       commandString += ";";
@@ -155,7 +155,7 @@ namespace NewsGator.Models
       {
         if (filters[i] != null)
         {
-          cmd.Parameters.Add($"@{filters[i]}", MySqlDbType.VarChar).Value = $"{filters[i]}";
+          cmd.Parameters.Add($"@{filterNames[i]}", MySqlDbType.VarChar).Value = $"{filters[i]}";
         }
       }
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
