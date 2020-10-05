@@ -19,11 +19,6 @@ namespace NewsGator
     {
       Configuration = configuration;
     }
-
-    public static class DbConfiguration
-    {
-      public static string ConnectionString = $"server=localhost;user id=root;password={EnvironmentalVariables.SqlPassword};port=3306;database=gator_test;";
-    }
     public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.

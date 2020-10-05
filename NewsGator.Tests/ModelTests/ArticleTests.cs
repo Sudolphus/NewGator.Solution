@@ -9,13 +9,15 @@ namespace NewsGator.Tests
     [TestMethod]
     public void Article_ShouldInstantiateAnObject_Article()
     {
-      Article newArticle = new Article("source", "author", "title", "summary", "url");
+      Article newArticle = new Article(1, "source", "author", "title", "summary", "url", "10-5-2020");
       Assert.AreEqual(typeof(Article), newArticle.GetType());
+      Assert.AreEqual(1, newArticle.ArticlesId);
       Assert.AreEqual("source", newArticle.Source);
       Assert.AreEqual("author", newArticle.Author);
       Assert.AreEqual("title", newArticle.Title);
       Assert.AreEqual("summary", newArticle.Summary);
       Assert.AreEqual("url", newArticle.Url);
+      Assert.AreEqual("10-5-2020", newArticle.Date);
     }
 
     [TestMethod]
@@ -45,7 +47,7 @@ namespace NewsGator.Tests
     public void NewsApi_ShouldCreateTheCorrectEndpoint_BBCEndpoint()
     {
       NewsApi bbc = new NewsApi("BBC News");
-      string endpoint = $"top-headlines?sources=bbc-news&pageSize=100&apiKey={EnvironmentalVariables.NewsApiKey}";
+      string endpoint = $"top-headlines?sources=bbc-news&pageSize=20&apiKey={EnvironmentalVariables.NewsApiKey}";
       Assert.AreEqual(endpoint, bbc.GetTopHeadlinesEndpoint());
     }
 
@@ -63,7 +65,7 @@ namespace NewsGator.Tests
     public void NewsApi_ShouldCreateTheCorrectEndpoint_APEndpoint()
     {
       NewsApi ap = new NewsApi("Associated Press");
-      string endpoint = $"top-headlines?sources=associated-press&pageSize=100&apiKey={EnvironmentalVariables.NewsApiKey}";
+      string endpoint = $"top-headlines?sources=associated-press&pageSize=20&apiKey={EnvironmentalVariables.NewsApiKey}";
       Assert.AreEqual(endpoint, ap.GetTopHeadlinesEndpoint());
     }
 
@@ -81,7 +83,7 @@ namespace NewsGator.Tests
     public void NewsApi_ShouldCreateTheCorrectEndpoint_REndpoint()
     {
       NewsApi r = new NewsApi("Reuters");
-      string endpoint = $"top-headlines?sources=reuters&pageSize=100&apiKey={EnvironmentalVariables.NewsApiKey}";
+      string endpoint = $"top-headlines?sources=reuters&pageSize=20&apiKey={EnvironmentalVariables.NewsApiKey}";
       Assert.AreEqual(endpoint, r.GetTopHeadlinesEndpoint());
     }
 
@@ -99,7 +101,7 @@ namespace NewsGator.Tests
     public void NewsApi_ShouldCreateTheCorrectEndpoint_BEndpoint()
     {
       NewsApi b = new NewsApi("Bloomberg");
-      string endpoint = $"top-headlines?sources=bloomberg&pageSize=100&apiKey={EnvironmentalVariables.NewsApiKey}";
+      string endpoint = $"top-headlines?sources=bloomberg&pageSize=20&apiKey={EnvironmentalVariables.NewsApiKey}";
       Assert.AreEqual(endpoint, b.GetTopHeadlinesEndpoint());
     }
 
