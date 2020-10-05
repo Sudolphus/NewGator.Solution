@@ -15,6 +15,10 @@ namespace NewsGator.Controllers
         IEnumerable<Article> articleList = source.GetTopHeadlines();
         articles.AddRange(articleList);
       }
+      foreach(Article article in articles)
+      {
+        article.Save();
+      }
       return View(articles);
     }
 
@@ -31,6 +35,12 @@ namespace NewsGator.Controllers
       }
       Article[] articles = source.GetTopHeadlines();
       return View(articles);
+    }
+
+    public IActionResult Reset()
+    {
+      Article.ClearAll();
+      return RedirectToAction("Index", "Home");
     }
   }
 }

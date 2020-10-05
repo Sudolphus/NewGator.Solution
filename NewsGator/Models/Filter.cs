@@ -19,7 +19,7 @@ namespace NewsGator.Models
       this.Date = null;
     }
 
-    public Filter(string source, string author, string title, string summary, string url, string date)
+    public Filter(string source = null, string author = null, string title = null, string summary = null, string url = null, string date = null)
     {
       this.Source = source;
       this.Author = author;
