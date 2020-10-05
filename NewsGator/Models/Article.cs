@@ -102,7 +102,15 @@ namespace NewsGator.Models
 
     public void Save()
     {
-      
+      MySqlConnection conn = DB.OpenConnection();
+      MySqlCommand cmd = DB.CreateCommand(conn, @"INSERT INTO articles(source,author,title,summary,url,date) VALUES(@articleSource, @articleAuthor, @articleTitle, @articleSummary, @articleUrl, @articleDate);");
+      cmd.Parameters.Add("@articleSource", MySqlDbType.VarChar).Value = this.Source;
+      cmd.Parameters.Add("@articleAuthor", MySqlDbType.VarChar).Value = this.Author;
+      cmd.Parameters.Add("@articleTitle", MySqlDbType.VarChar).Value = this.Title;
+      cmd.Parameters.Add("@articleSummary", MySqlDbType.VarChar).Value = this.Summary;
+      cmd.Parameters.Add("@articleUrl", MySqlDbType.VarChar).Value = this.Url;
+      cmd.Parameters.Add("@articleDate", MySqlDbType.VarChar).Value = DateTime.Now.ToString("d");
+      cmd.ExecuteNonQuery();
     }
   }
 }
