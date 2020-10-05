@@ -79,12 +79,10 @@ namespace NewsGator.Models
       cmd.ExecuteNonQuery();
       DB.CloseConnection(conn);
     }
-    public static List<Article> GetAll()
+
+    public static List<Article> GetArticleList(MySqlDataReader rdr)
     {
-      List<Article> allArticles = new List<Article>{ };
-      MySqlConnection conn = DB.OpenConnection();
-      MySqlCommand cmd = DB.CreateCommand(conn, @"SELECT * FROM articles;");
-      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      List<Article> articles = new List<Article>();
       while(rdr.Read())
       {
         int articlesId = rdr.GetInt32(0);
@@ -94,8 +92,16 @@ namespace NewsGator.Models
         string summary = rdr.GetString(4);
         string url = rdr.GetString(5);
         string date = rdr.GetString(6);
-        allArticles.Add(new Article(articlesId, source, author, title, summary, url, date));
+        articles.Add(new Article(articlesId, source, author, title, summary, url, date));
       }
+      return articles;
+    }
+    public static List<Article> GetAll()
+    {
+      MySqlConnection conn = DB.OpenConnection();
+      MySqlCommand cmd = DB.CreateCommand(conn, @"SELECT * FROM articles;");
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      List<Article> allArticles = Article.GetArticleList(rdr);
       DB.CloseConnection(conn);
       return allArticles;
     }
@@ -120,25 +126,13 @@ namespace NewsGator.Models
       MySqlCommand cmd = DB.CreateCommand(conn, @"SELECT * FROM articles WHERE articlesId = @id;");
       cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-      Article foundArticle = null;
-      while(rdr.Read())
-      {
-        int articlesId = rdr.GetInt32(0);
-        string source = rdr.GetString(1);
-        string author = rdr.GetString(2);
-        string title = rdr.GetString(3);
-        string summary = rdr.GetString(4);
-        string url = rdr.GetString(5);
-        string date = rdr.GetString(6);
-        foundArticle = new Article(articlesId, source, author, title, summary, url, date);
-      }
+      Article foundArticle = Article.GetArticleList(rdr)[0];
       DB.CloseConnection(conn);
       return foundArticle;
     }
 
     public static List<Article> Find(string[] filters)
     {
-      List<Article> foundArticles = new List<Article>();
       string[] filterNames = new string[6] {"source", "author", "title", "summary", "url", "date"};
       MySqlConnection conn = DB.OpenConnection();
       string commandString = @"SELECT * FROM articles";
@@ -168,17 +162,20 @@ namespace NewsGator.Models
         }
       }
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-      while (rdr.Read())
-      {
-        int articlesId = rdr.GetInt32(0);
-        string source = rdr.GetString(1);
-        string author = rdr.GetString(2);
-        string title = rdr.GetString(3);
-        string summary = rdr.GetString(4);
-        string url = rdr.GetString(5);
-        string date = rdr.GetString(6);
-        foundArticles.Add(new Article(articlesId, source, author, title, summary, url, date));
-      }
+      List<Article> foundArticles = Article.GetArticleList(rdr);
+      DB.CloseConnection(conn);
+      return foundArticles;
+    }
+
+    public static List<Article> TopicFind(string topic)
+    {
+      MySqlConnection conn = DB.OpenConnection();
+      string commandString = @"SELECT * FROM articles WHERE title LIKE @title OR summary LIKE @summary;";
+      MySqlCommand cmd = DB.CreateCommand(conn, commandString);
+      cmd.Parameters.Add("@title", MySqlDbType.VarChar).Value = '%' + topic + '%';
+      cmd.Parameters.Add("@summary", MySqlDbType.LongText).Value = '%' + topic + '%';
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      List<Article> foundArticles = Article.GetArticleList(rdr);
       DB.CloseConnection(conn);
       return foundArticles;
     }

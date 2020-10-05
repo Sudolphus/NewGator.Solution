@@ -128,5 +128,19 @@ namespace NewsGator.Tests
       List<Article> testList = new List<Article>{ testArticle, testArticle2 };
       CollectionAssert.AreEqual(results, testList);
     }
+
+    [TestMethod]
+    public void TopicFind_CanFindByKeyword_ArticleList()
+    {
+      string[] valArr = new string[4]{"author", "title", "summary", "url"};
+      string[] valArr2 = new string[4]{"byline", "headline", "abstract", "url2"};
+      Article testArticle = new Article("test1", valArr);
+      Article testArticle2 = new Article("test2", valArr2);
+      testArticle.Save();
+      testArticle2.Save();
+      List<Article> results = Article.TopicFind("title");
+      List<Article> testList = new List<Article>{ testArticle };
+      CollectionAssert.AreEqual(results, testList);
+    }
   }
 }
