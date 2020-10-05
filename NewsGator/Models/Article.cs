@@ -142,11 +142,20 @@ namespace NewsGator.Models
       string[] filterNames = new string[6] {"source", "author", "title", "summary", "url", "date"};
       MySqlConnection conn = DB.OpenConnection();
       string commandString = @"SELECT * FROM articles";
+      bool multiFlag = false;
       for (int i = 0; i <= 5; i++)
       {
         if (filters[i] != null)
         {
-          commandString += $" WHERE {filterNames[i]} = @{filterNames[i]}";
+          if (!multiFlag)
+          {
+            commandString += $" WHERE {filterNames[i]} = @{filterNames[i]}";
+            multiFlag = true;
+          }
+          else
+          {
+            commandString += $" AND {filterNames[i]} = @{filterNames[i]}";
+          }
         }
       }
       commandString += ";";
