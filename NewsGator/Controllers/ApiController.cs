@@ -15,5 +15,12 @@ namespace NewsGator.Controllers
       List<Article> articleList = Article.Find(filters);
       return articleList;
     }
+
+    [HttpGet("topic/{topic}")]
+    public List<Article> Get(string topic)
+    {
+      List<Article> articles = Article.TopicFind(topic);
+      return articles;
+    }
   }
 }
