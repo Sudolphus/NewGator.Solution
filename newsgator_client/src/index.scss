@@ -29,7 +29,7 @@ h2 {
     a {
       color: $burnt_sienna;
       font-weight: bold;
-      &:hover {
+      &:hover, &:focus {
         color: $accent_orange;
         font-weight: bolder;
       }

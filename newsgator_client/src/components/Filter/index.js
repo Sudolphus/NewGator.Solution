@@ -6,19 +6,15 @@ const sources = ["BBC News", "Associated Press", "Reuters", "Bloomberg", "New Yo
 
 const Filter = () => (
   <Form>
-    <Form.Group controlId="topic">
-      <Form.Label>Search By Topic</Form.Label>
-      <Form.Control type='search' placeholder='Search' />
-    </Form.Group>
-    <div className = "checkbox-container">
+    <div className = "checkbox-container mt-3">
       <h6>Sources: </h6>
       {sources.map(source => <Form.Check key={source} type="checkbox" label={source} defaultChecked={true} inline />)}
     </div>
-    <Form.Group controlId="date-range">
-      <Form.Label>Filter By Oldest Date</Form.Label>
-      <Form.Control type='date' defaultValue={Date.now()} />
+    <Form.Group controlId="topic" className="mt-3">
+      <Form.Label>Search By Topic</Form.Label>
+      <Form.Control type='search' placeholder='Search' />
     </Form.Group>
-    <Button variant='accent-orange' type='submit' block>Search</Button>
+    <Button variant='accent-orange' className="mt-3" type='submit' block>Search</Button>
   </Form>
 )
 
