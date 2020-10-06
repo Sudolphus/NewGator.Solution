@@ -45,7 +45,7 @@ const Filter = ({ changeSources, changeTopic }) => {
         <Form.Label>Search By Topic</Form.Label>
         <Form.Control type='search' placeholder='Search' value={state.topic} onChange={handleTopic} />
       </Form.Group>
-      <Button variant='accent-orange' className="mt-3" type='submit' block>Search</Button>
+      <Button variant='accent-orange' className="mt-3 mb-3" type='submit' block>Search</Button>
     </Form>
   )
 }

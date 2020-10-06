@@ -10,7 +10,7 @@ const Navigation = () => (
   <Navbar expand="lg">
     <Nav>
       <Nav.Link href={ROUTES.HOME}>Home</Nav.Link>
-      <Nav.Link href={ROUTES.FILTER}>Filter</Nav.Link>
+      {/* <Nav.Link href={ROUTES.FILTER}>Filter</Nav.Link> */}
       <Nav.Link href={ROUTES.ACCOUNT}>Account</Nav.Link>
     </Nav>
     <Form className="ml-auto" inline>
