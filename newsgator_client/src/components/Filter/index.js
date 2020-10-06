@@ -25,8 +25,9 @@ const Filter = () => {
     }
   }
 
-  const handleTopic = (topic) => {
-    dispatch(c.changeTopic(topic))
+  const handleTopic = event => {
+    const topic = event.target.value;
+    dispatch(c.changeTopic(topic));
   }
 
   return (
@@ -37,7 +38,7 @@ const Filter = () => {
       </div>
       <Form.Group controlId="topic" className="mt-3">
         <Form.Label>Search By Topic</Form.Label>
-        <Form.Control type='search' placeholder='Search' value={state.topic} onChange={topic => handleTopic(topic)} />
+        <Form.Control type='search' placeholder='Search' value={state.topic} onChange={handleTopic} />
       </Form.Group>
       <Button variant='accent-orange' className="mt-3" type='submit' block>Search</Button>
     </Form>
