@@ -12,6 +12,7 @@ sources.txt
 news-api-sources-objs.txt
 news-api-sample-response.txt
 gator.sql
+react_diagram.drawio
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
