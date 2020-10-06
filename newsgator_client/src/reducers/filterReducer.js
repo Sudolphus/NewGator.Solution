@@ -13,7 +13,7 @@ const filterReducer = (state = initial_state, action) => {
       const newSources = [...state.sources, name];
       return Object.assign({}, state, { sources: newSources });
     case a.REMOVE_SOURCE:
-      const newSourcesRemove = state.sources.filter(elem => elem != name);
+      const newSourcesRemove = state.sources.filter(elem => elem !== name);
       return Object.assign({}, state, { sources: newSourcesRemove });
     case a.CHANGE_TOPIC:
       return Object.assign({}, state, { topic });
