@@ -1,13 +1,84 @@
+$background_blue: #85DCB8;
+$accent_red: #E27D60;
+$accent_orange: #E8A87C;
+$accent_pink: #C38D9E;
+$burnt_sienna: #DD6E42;
+$deep_blue: #41B3A3;
+$raisin_black: #211A1D;
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Times New Roman', Times, serif;
+  background-color: $deep_blue;
+  color: $raisin_black;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h2 {
+  text-align: center;
+}
+
+.card {
+  margin-bottom: 2rem;
+  .card-header, .card-footer {
+    background-color: $background_blue;
+    a {
+      color: $burnt_sienna;
+      font-weight: bold;
+      &:hover {
+        color: $accent_orange;
+        font-weight: bolder;
+      }
+    }
+  }
+}
+
+.card-body {
+  background-color: $accent_pink;
+  color: $raisin_black;
+}
+
+nav {
+  background-color: $accent_red;
+  .navbar-nav {
+    color: $raisin_black;
+  }
+}
+
+.btn-accent-orange {
+  color: $accent_orange;
+  border-color: $accent_orange;
+  font-weight: bold;
+}
+
+.btn-accent-orange:hover, .btn-accent-orange.hover {
+  color: $raisin_black;
+  background-color: $accent_orange;
+  color: $accent_orange;
+}
+.btn-accent-orange:focus, .btn-accent-orange.focus {
+  box-shadow: 0 0 0 0.2rem rgba(232, 168, 124, 0.5);
+}
+
+.btn-accent-orange.disabled, .btn-accent-orange:disabled {
+  color: $accent_orange;
+  background-color: transparent;
+}
+
+.btn-accent-orange:not(:disabled):not(.disabled):active, .btn-accent-orange:not(:disabled):not(.disabled).active,
+.show > .btn-accent-orange.dropdown-toggle {
+  color: $raisin_black;
+  background-color: $accent_orange;
+  border-color: $accent_orange;
+}
+
+.btn-accent-orange:not(:disabled):not(.disabled):active:focus, .btn-accent-orange:not(:disabled):not(.disabled).active:focus,
+.show > .btn-accent-orange.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(232, 168, 124, 0.5);
+}
+
+.checkbox-container {
+  font-weight: bold;
+  color: $raisin_black;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
