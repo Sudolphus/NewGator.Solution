@@ -6,6 +6,12 @@ $burnt_sienna: #DD6E42;
 $deep_blue: #41B3A3;
 $raisin_black: #211A1D;
 
+@mixin auto-margin() {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 body {
   font-family: 'Times New Roman', Times, serif;
   background-color: $deep_blue;
@@ -29,11 +35,19 @@ h2 {
       }
     }
   }
-}
-
-.card-body {
-  background-color: $accent_pink;
-  color: $raisin_black;
+  .card-body {
+    background-color: white;
+    color: $raisin_black;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    .form-group {
+      align-self: flex-start;
+    }
+    button {
+      align-self: flex-end;
+    }
+  }
 }
 
 nav {
@@ -43,42 +57,60 @@ nav {
   }
 }
 
-.btn-accent-orange {
-  color: $accent_orange;
-  border-color: $accent_orange;
+@function alpha-fix($color) {
+  $red: red($color);
+  $green: green($color);
+  $blue: blue($color);
+  @return rgba($red, $green, $blue, 0.5);
+}
+
+@mixin button-gen($button-color, $float-over) {
+  color: $button-color;
+  border-color: $button-color;
   font-weight: bold;
+  &:hover {
+    color: $float-over;
+    background-color: $button-color;
+    border-color: $button-color;
+  }
+  &:focus, &.focus {
+    box-shadow: 0 0 0 0.2rem alpha-fix($button-color);
+  }
+  &:disabled, &.disabled {
+    color: $button-color;
+    background-color: transparent;
+  }
+  &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled).active {
+    color: $float-over;
+    background-color: $button-color;
+    border-color: $button-color;
+  }
+  &:not(:disabled):not(.disabled):active:focus, &:not(:disabled):not(:disabled):not(.disabled).active:focus {
+    box-shadow: 0 0 0 0.2rem alpha-fix($button-color);
+  }
 }
 
-.btn-accent-orange:hover, .btn-accent-orange.hover {
-  color: $raisin_black;
-  background-color: $accent_orange;
-  color: $accent_orange;
-}
-.btn-accent-orange:focus, .btn-accent-orange.focus {
-  box-shadow: 0 0 0 0.2rem rgba(232, 168, 124, 0.5);
+.btn-accent-orange {
+  @include button-gen($accent_orange, $raisin_black);
 }
 
-.btn-accent-orange.disabled, .btn-accent-orange:disabled {
-  color: $accent_orange;
-  background-color: transparent;
-}
-
-.btn-accent-orange:not(:disabled):not(.disabled):active, .btn-accent-orange:not(:disabled):not(.disabled).active,
-.show > .btn-accent-orange.dropdown-toggle {
-  color: $raisin_black;
-  background-color: $accent_orange;
-  border-color: $accent_orange;
-}
-
-.btn-accent-orange:not(:disabled):not(.disabled):active:focus, .btn-accent-orange:not(:disabled):not(.disabled).active:focus,
-.show > .btn-accent-orange.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(232, 168, 124, 0.5);
+.btn-deep-blue {
+  @include button-gen($deep_blue, $raisin_black);
 }
 
 .checkbox-container {
+  @include auto-margin();
   font-weight: bold;
   color: $raisin_black;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+}
+
+.account-card-wrapper {
+  @include auto-margin();
+  .card {
+    min-width: 48vw;
+    .card-header {
+      text-align: center;
+      font-weight: bolder;
+    }
+  }
 }
