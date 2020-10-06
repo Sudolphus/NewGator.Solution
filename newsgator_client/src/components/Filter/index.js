@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import sources from '../../constants/sources';
@@ -6,15 +7,13 @@ import { filterReducer } from './../../reducers';
 import * as c from './../../actions/index';
 
 
-const Filter = () => {
+const Filter = ({ changeSources, changeTopic }) => {
   const initial_state = {
     sources,
     topic: ''
   };
 
   const [state, dispatch] = React.useReducer(filterReducer, initial_state);
-
-  React.useEffect(() => console.log(state), [state]);
 
   const handleCheckbox = (source) => {
     const sourceCheck = state.sources.filter(elem => elem === source);
@@ -30,8 +29,14 @@ const Filter = () => {
     dispatch(c.changeTopic(topic));
   }
 
+  const onSubmit = event => {
+    event.preventDefault();
+    changeSources(state.sources);
+    changeTopic(state.topic);
+  }
+
   return (
-    <Form>
+    <Form onSubmit={onSubmit} >
       <div className = "checkbox-container mt-3">
         <h6>Sources: </h6>
         {sources.map(source => <Form.Check key={source} type="checkbox" label={source} defaultChecked={true} inline onClick={() => handleCheckbox(source)} />)}
@@ -43,6 +48,11 @@ const Filter = () => {
       <Button variant='accent-orange' className="mt-3" type='submit' block>Search</Button>
     </Form>
   )
+}
+
+Filter.propTypes = {
+  changeSources: PropTypes.func,
+  changeTopic: PropTypes.func
 }
 
 export default Filter;
