@@ -1,12 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStory } from './../StoryList';
 import Article from './../Article';
-import stories from './../../constants/stories';
 
-const Results = () => (
+const Results = ({ stories }) => (
   <React.Fragment>
     <h2>Top Stories</h2>
     {stories.map(story => <Article story={story} />)}
   </React.Fragment>
 )
 
-export default Results;
+Results.propTypes = {
+  stories: PropTypes.array
+}
+
+export default withStory(Results);

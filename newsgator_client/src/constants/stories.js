@@ -78,4 +78,14 @@ const story8 = {
   date: '10/5/2020'
 }
 
-export default [story1, story2, story3, story4, story5, story6, story7, story8]
+const story9 = {
+  articlesId: '99999',
+  source: 'Test article',
+  author: 'Me',
+  ttile: 'If you can read this, the context provider is working',
+  summary: 'I really hope this works',
+  url: 'https://www.google.com',
+  date: '10/5/2020'
+}
+
+export default [story1, story2, story3, story4, story5, story6, story7, story8, story9];
