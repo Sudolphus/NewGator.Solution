@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 
 const Article = ({ story }) => (
-  <Card key={story.articlesId}>
+  <Card>
     <Card.Header>
-      <Card.Title>{story.source}</Card.Title>
+      <Card.Title>{story.title}</Card.Title>
       <Card.Subtitle>{story.author} - {story.source}</Card.Subtitle>
     </Card.Header>
     <Card.Body>

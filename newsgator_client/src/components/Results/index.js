@@ -6,7 +6,7 @@ import Article from './../Article';
 const Results = ({ stories }) => (
   <React.Fragment>
     <h2>Top Stories</h2>
-    {stories.map(story => <Article story={story} />)}
+    {stories.map(story => <Article key={story.articlesId} story={story} />)}
   </React.Fragment>
 )
 
