@@ -1,8 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
-const sources = ["BBC News", "Associated Press", "Reuters", "Bloomberg", "New York Times", "CBS News", "Wall Street Journal", "Washington Post", "Politico"];
+import sources from '../../constants/sources';
 
 const Filter = () => (
   <Form>
