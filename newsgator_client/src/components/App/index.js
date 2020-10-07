@@ -17,7 +17,9 @@ const App = () => {
   React.useEffect(() => {
     async function getStoryList() {
       try {
-        const response = await fetch('http://localhost:5000/api/Info/');
+        const today = new Date();
+        const todayString = today.getMonth()+1 + "/" + today.getDate() + "/" + today.getFullYear();
+        const response = await fetch(`http://localhost:5000/api/Info?date=${todayString}`);
         const jsonResponse = await response.json();
         setStoryList(jsonResponse);
         setError(null);
