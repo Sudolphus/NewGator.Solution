@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { StoryContext } from './../StoryList';
 import Container from 'react-bootstrap/Container';
 import Navigation from './../Navigation';
-import Results from './../Results';
+import Home from './../Home';
 import Account from './../Account';
 import Archive from './../Archive';
 import * as ROUTES from '../../constants/routes';
@@ -36,7 +36,7 @@ const App = () => {
       <Container fluid>
         <Router>
           <Navigation changeSearch={setSearch} />
-          <Route exact path={ROUTES.HOME} render={() => <Results search={search} error={error} />} />
+          <Route exact path={ROUTES.HOME} render={() => <Home search={search} error={error} />} />
           <Route path={ROUTES.ARCHIVE} component={Archive} />
           <Route path={ROUTES.ACCOUNT} component={Account} />
         </Router>

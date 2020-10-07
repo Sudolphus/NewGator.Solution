@@ -7,14 +7,15 @@ import { filterReducer } from './../../reducers';
 import * as c from './../../actions/index';
 
 
-const Filter = ({ changeSources, changeTopic }) => {
+const Filter = ({ archiveFilter, changeSources, changeTopic }) => {
   const initial_state = {
     sources,
     topic: ''
   };
 
   const [state, dispatch] = React.useReducer(filterReducer, initial_state);
-  const [showFilters, setShowFilters] = React.useState(false);
+  const [dropdown, setDropdown] = React.useState(null);
+  const [showFilters, setShowFilters] = React.useState(archiveFilter);
 
   const show = showFilters ? null : "d-none";
   const onHideShow = () => {setShowFilters(!showFilters)};
@@ -28,6 +29,10 @@ const Filter = ({ changeSources, changeTopic }) => {
     }
   }
 
+  const handleDropdown = event => {
+    setDropdown(event.target.value);
+  }
+
   const handleTopic = event => {
     const topic = event.target.value;
     dispatch(c.changeTopic(topic));
@@ -35,7 +40,11 @@ const Filter = ({ changeSources, changeTopic }) => {
 
   const onSubmit = event => {
     event.preventDefault();
-    changeSources(state.sources);
+    if (archiveFilter) {
+      changeSources(dropdown);
+    } else {
+      changeSources(state.sources);
+    }
     changeTopic(state.topic);
   }
 
@@ -44,10 +53,17 @@ const Filter = ({ changeSources, changeTopic }) => {
       <Button type='button' variant='accent-orange' className="mb-2" onClick={onHideShow}>Show Filters</Button>
       <div className={show}>
         <Form onSubmit={onSubmit} >
-          <div className = "checkbox-container mt-3">
+          {!archiveFilter && <div className = "checkbox-container mt-3">
             <h6>Sources: </h6>
             {sources.map(source => <Form.Check key={source} type="checkbox" label={source} defaultChecked={true} inline onClick={() => handleCheckbox(source)} />)}
-          </div>
+          </div>}
+          {archiveFilter && <Form.Group controlId="sourceName">
+              <Form.Label>Select A Source:</Form.Label>
+              <Form.Control as="select" defaultValue="Any" onChange={handleDropdown}>
+                <option value={null}>Any</option>
+                {sources.map(source => <option key={source} value={source}>{source}</option>)}
+              </Form.Control>
+            </Form.Group>}
           <Form.Group controlId="topic" className="mt-3">
             <Form.Label>Search By Topic</Form.Label>
             <Form.Control type='search' placeholder='Search' value={state.topic} onChange={handleTopic} />
@@ -60,6 +76,7 @@ const Filter = ({ changeSources, changeTopic }) => {
 }
 
 Filter.propTypes = {
+  archiveFilter: PropTypes.bool,
   changeSources: PropTypes.func,
   changeTopic: PropTypes.func
 }
