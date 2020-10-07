@@ -22,18 +22,9 @@ const Home = ({ stories, search, error }) => {
   }
 
   const getStoryList = (unfilteredList) => {
-    console.log(author);
-    let storyList = unfilteredList.filter(articles => sourceMatch(articles.source));
-    //eslint-disable-next-line
-    if (topic != null && topic != '') {
-      const search = new RegExp(topic, 'i');
-      storyList = storyList.filter(articles => (search.test(articles.title) || search.test(articles.summary)));
-    }
-    //eslint-disable-next-line
-    if (author != null && author != '') {
-      const search = new RegExp(author, 'i');
-      storyList = storyList.filter(articles => (search.test(articles.author)));
-    }
+    const topicSearch = topic ? new RegExp(topic, 'i') : /./;
+    const authorSearch = author ? new RegExp(author, 'i') : /./;
+    const storyList = unfilteredList.filter(articles => sourceMatch(articles.source) && (topicSearch.test(articles.title) || topicSearch.test(articles.summary)) && authorSearch.test(articles.author));
     return storyList;
   }
 
