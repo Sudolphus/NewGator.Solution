@@ -7,10 +7,11 @@ import { filterReducer } from './../../reducers';
 import * as c from './../../actions/index';
 
 
-const Filter = ({ archiveFilter, changeSources, changeTopic }) => {
+const Filter = ({ archiveFilter, changeSources, changeTopic, changeAuthor }) => {
   const initial_state = {
     sources,
-    topic: ''
+    topic: '',
+    author: ''
   };
 
   const [state, dispatch] = React.useReducer(filterReducer, initial_state);
@@ -38,6 +39,11 @@ const Filter = ({ archiveFilter, changeSources, changeTopic }) => {
     dispatch(c.changeTopic(topic));
   }
 
+  const handleAuthor = event => {
+    const author = event.target.value;
+    dispatch(c.changeAuthor(author))
+  }
+
   const onSubmit = event => {
     event.preventDefault();
     if (archiveFilter) {
@@ -46,6 +52,7 @@ const Filter = ({ archiveFilter, changeSources, changeTopic }) => {
       changeSources(state.sources);
     }
     changeTopic(state.topic);
+    changeAuthor(state.author);
   }
 
   return (
@@ -57,16 +64,20 @@ const Filter = ({ archiveFilter, changeSources, changeTopic }) => {
             <h6>Sources: </h6>
             {sources.map(source => <Form.Check key={source} type="checkbox" label={source} defaultChecked={true} inline onClick={() => handleCheckbox(source)} />)}
           </div>}
-          {archiveFilter && <Form.Group controlId="sourceName">
+          {archiveFilter && <Form.Group controlId="sourceName" className="mt-3">
               <Form.Label>Select A Source:</Form.Label>
               <Form.Control as="select" defaultValue="Any" onChange={handleDropdown}>
                 <option value={null}>Any</option>
                 {sources.map(source => <option key={source} value={source}>{source}</option>)}
               </Form.Control>
             </Form.Group>}
+          <Form.Group controlId="author" className="mt-3">
+            <Form.Label>Search By Author</Form.Label>
+            <Form.Control type='search' placeholder='Author Name' value={state.author} onChange={handleAuthor} />
+          </Form.Group>
           <Form.Group controlId="topic" className="mt-3">
             <Form.Label>Search By Topic</Form.Label>
-            <Form.Control type='search' placeholder='Search' value={state.topic} onChange={handleTopic} />
+            <Form.Control type='search' placeholder='Topic' value={state.topic} onChange={handleTopic} />
           </Form.Group>
           <Button variant='accent-orange' className="mt-3 mb-3" type='submit' block>Search</Button>
         </Form>
@@ -78,7 +89,8 @@ const Filter = ({ archiveFilter, changeSources, changeTopic }) => {
 Filter.propTypes = {
   archiveFilter: PropTypes.bool,
   changeSources: PropTypes.func,
-  changeTopic: PropTypes.func
+  changeTopic: PropTypes.func,
+  changeAuthor: PropTypes.func
 }
 
 export default Filter;

@@ -7,7 +7,7 @@ const initial_state = {
 }
 
 const filterReducer = (state = initial_state, action) => {
-  const { type, name, topic } = action;
+  const { type, name, topic, author } = action;
   switch (type) {
     case a.ADD_SOURCE:
       const newSources = [...state.sources, name];
@@ -17,6 +17,8 @@ const filterReducer = (state = initial_state, action) => {
       return Object.assign({}, state, { sources: newSourcesRemove });
     case a.CHANGE_TOPIC:
       return Object.assign({}, state, { topic });
+    case a.CHANGE_AUTHOR:
+      return Object.assign({}, state, { author });
     default:
       return state;
   }
