@@ -6,10 +6,13 @@ import Filter from './../Filter';
 import sources from './../../constants/sources';
 import Button from 'react-bootstrap/Button';
 
-const Results = ({ stories }) => {
+const Results = ({ stories, search }) => {
   const [showFilters, setShowFilters] = React.useState(false);
   const [sourcesList, setSourcesList] = React.useState(sources);
   const [topic, setTopic] = React.useState(null);
+  
+  React.useEffect(() => { setTopic(search)}, [search]);
+
   const show = showFilters ? null : "d-none";
   const handleHideShow = () => {
     setShowFilters(!showFilters);
@@ -47,7 +50,8 @@ const Results = ({ stories }) => {
 }
 
 Results.propTypes = {
-  stories: PropTypes.array
+  stories: PropTypes.array,
+  search: PropTypes.string
 }
 
 export default withStory(Results);
