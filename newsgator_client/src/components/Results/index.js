@@ -29,6 +29,7 @@ const Results = ({ stories, search, error }) => {
 
   const getStoryList = (unfilteredList) => {
     let storyList = unfilteredList.filter(articles => sourceMatch(articles.source));
+    //eslint-disable-next-line
     if (topic != null && topic != '') {
       const search = new RegExp(topic, 'i');
       storyList = storyList.filter(articles => (search.test(articles.title) || search.test(articles.summary)));

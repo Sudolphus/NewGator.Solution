@@ -15,6 +15,8 @@ namespace NewsGator
 {
   public class Startup
   {
+    private readonly string AllowedOrigins = "_AllowedOrigins";
+
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
@@ -31,6 +33,14 @@ namespace NewsGator
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
 
+      services.AddCors(options => 
+      {
+        options.AddPolicy(name: AllowedOrigins,
+                          builder =>
+                          {
+                            builder.WithOrigins("http://localhost:3000");
+                          });
+      });
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -67,6 +77,7 @@ namespace NewsGator
       app.UseStaticFiles();
       // app.UseCookiePolicy();
 
+      app.UseCors(AllowedOrigins);
 
       app.UseOpenApi();
       app.UseSwaggerUi3();
