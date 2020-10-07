@@ -19,6 +19,7 @@ const Results = ({ stories, search, error }) => {
   }
 
   const sourceMatch = (sourceName) => {
+    // eslint-disable-next-line
     const sourceTest = sourcesList.filter(source => sourceName == source);
     if (sourceTest.length > 0) {
       return true;

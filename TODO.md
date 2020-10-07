@@ -15,3 +15,5 @@
 9. Start by showing off the top stories of the day, with links to the full article
 10. Add filtering ability (by topic, by keyword, by headline, by source)
 11. Eventually, add user login and user accounts. Firebase probably easiest solution, but Tokens prefered (?)
+
+CORS!!!!!!!
