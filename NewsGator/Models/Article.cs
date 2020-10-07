@@ -1,6 +1,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NewsGator.Models
 {
@@ -133,11 +134,11 @@ namespace NewsGator.Models
 
     public static List<Article> Find(string[] filters)
     {
-      string[] filterNames = new string[6] {"source", "author", "title", "summary", "url", "date"};
+      string[] filterNames = new string[3] {"source", "author", "date" };
       MySqlConnection conn = DB.OpenConnection();
       string commandString = @"SELECT * FROM articles";
       bool multiFlag = false;
-      for (int i = 0; i <= 5; i++)
+      for (int i = 0; i < 3; i++)
       {
         if (filters[i] != null)
         {
@@ -152,14 +153,30 @@ namespace NewsGator.Models
           }
         }
       }
+      if (filters[3] != null)
+      {
+        if (!multiFlag)
+        {
+          commandString += $" WHERE (title LIKE @title OR summary LIKE @summary)";
+        }
+        else
+        {
+          commandString += $" AND (title LIKE @title OR summary LIKE @summary)";
+        }
+      }
       commandString += ";";
       MySqlCommand cmd = DB.CreateCommand(conn, commandString);
-      for (int i = 0; i <= 5; i++)
+      for (int i = 0; i < 3; i++)
       {
         if (filters[i] != null)
         {
           cmd.Parameters.Add($"@{filterNames[i]}", MySqlDbType.VarChar).Value = $"{filters[i]}";
         }
+      }
+      if (filters[3] != null)
+      {
+        cmd.Parameters.Add("@title", MySqlDbType.VarChar).Value = '%' + $"{filters[3]}" + '%';
+        cmd.Parameters.Add("@summary", MySqlDbType.VarChar).Value = '%' + $"{filters[3]}" + '%';
       }
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
       List<Article> foundArticles = Article.GetArticleList(rdr);

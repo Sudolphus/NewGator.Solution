@@ -11,16 +11,9 @@ namespace NewsGator.Controllers
     [HttpGet]
     public List<Article> Get([FromQuery] Filter filter)
     {
-      string[] filters = new string[6]{ filter.Source, filter.Author, filter.Title, filter.Summary, filter.Url, filter.Date };
+      string[] filters = new string[4]{ filter.Source, filter.Author, filter.Date, filter.Topic };
       List<Article> articleList = Article.Find(filters);
       return articleList;
-    }
-
-    [HttpGet("topic/{topic}")]
-    public List<Article> Get(string topic)
-    {
-      List<Article> articles = Article.TopicFind(topic);
-      return articles;
     }
   }
 }
