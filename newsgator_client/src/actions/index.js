@@ -13,9 +13,19 @@ export const removeSource = (name) => ({
 export const changeTopic = (topic) => ({
   type: a.CHANGE_TOPIC,
   topic
-})
+});
 
 export const changeAuthor = (author) => ({
   type: a.CHANGE_AUTHOR,
   author
+});
+
+export const changeDate = (date) => ({
+  type: a.CHANGE_DATE,
+  date
+});
+
+export const changeDropdown = (dropdown) => ({
+  type: a.CHANGE_DROPDOWN,
+  dropdown
 })

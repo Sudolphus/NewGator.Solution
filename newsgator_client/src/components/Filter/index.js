@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useReducer} from 'react';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -7,16 +7,19 @@ import { filterReducer } from './../../reducers';
 import * as c from './../../actions/index';
 
 
-const Filter = ({ archiveFilter, changeSources, changeTopic, changeAuthor }) => {
+const Filter = ({ archiveFilter, changeSources, changeTopic, changeAuthor, changeDate }) => {
   const initial_state = {
     sources,
+    dropdown: null,
     topic: '',
-    author: ''
+    author: '',
+    date: ''
   };
 
-  const [state, dispatch] = React.useReducer(filterReducer, initial_state);
-  const [dropdown, setDropdown] = React.useState(null);
-  const [showFilters, setShowFilters] = React.useState(archiveFilter);
+  const [state, dispatch] = useReducer(filterReducer, initial_state);
+  const [showFilters, setShowFilters] = useState(archiveFilter);
+
+  // React.useEffect(() => { console.log(state) }, [state]);
 
   const show = showFilters ? null : "d-none";
   const onHideShow = () => {setShowFilters(!showFilters)};
@@ -31,7 +34,8 @@ const Filter = ({ archiveFilter, changeSources, changeTopic, changeAuthor }) => 
   }
 
   const handleDropdown = event => {
-    setDropdown(event.target.value);
+    const dropdown = event.target.value;
+    dispatch(c.changeDropdown(dropdown));
   }
 
   const handleTopic = event => {
@@ -44,10 +48,16 @@ const Filter = ({ archiveFilter, changeSources, changeTopic, changeAuthor }) => 
     dispatch(c.changeAuthor(author))
   }
 
+  const handleDate = event => {
+    const date = event.target.value;
+    dispatch(c.changeDate(date));
+  }
+
   const onSubmit = event => {
     event.preventDefault();
     if (archiveFilter) {
-      changeSources(dropdown);
+      changeSources(state.dropdown);
+      changeDate(state.date);
     } else {
       changeSources(state.sources);
     }
@@ -79,6 +89,10 @@ const Filter = ({ archiveFilter, changeSources, changeTopic, changeAuthor }) => 
             <Form.Label>Search By Topic</Form.Label>
             <Form.Control type='search' placeholder='Topic' value={state.topic} onChange={handleTopic} />
           </Form.Group>
+          {archiveFilter && <Form.Group controlId='date' className='mt-3'>
+            <Form.Label>Search By Date</Form.Label>
+            <Form.Control type='date' value={state.date} onChange={handleDate} />
+          </Form.Group>}
           <Button variant='accent-orange' className="mt-3 mb-3" type='submit' block>Search</Button>
         </Form>
       </div>
@@ -90,7 +104,8 @@ Filter.propTypes = {
   archiveFilter: PropTypes.bool,
   changeSources: PropTypes.func,
   changeTopic: PropTypes.func,
-  changeAuthor: PropTypes.func
+  changeAuthor: PropTypes.func,
+  changeDate: PropTypes.func
 }
 
 export default Filter;
