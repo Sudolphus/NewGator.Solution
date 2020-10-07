@@ -4,19 +4,12 @@ import { withStory } from './../StoryList';
 import Article from './../Article';
 import Filter from './../Filter';
 import sources from './../../constants/sources';
-import Button from 'react-bootstrap/Button';
 
 const Results = ({ stories, search, error }) => {
-  const [showFilters, setShowFilters] = React.useState(false);
   const [sourcesList, setSourcesList] = React.useState(sources);
   const [topic, setTopic] = React.useState(null);
   
   React.useEffect(() => { setTopic(search)}, [search]);
-
-  const show = showFilters ? null : "d-none";
-  const handleHideShow = () => {
-    setShowFilters(!showFilters);
-  }
 
   const sourceMatch = (sourceName) => {
     // eslint-disable-next-line
@@ -42,10 +35,7 @@ const Results = ({ stories, search, error }) => {
   return (
     <React.Fragment>
       <h2>Today's Top Stories</h2>
-      <Button type='button' variant='accent-orange' className="mb-2" onClick={handleHideShow}>Show Filters</Button>
-      <div className={show}>
-        <Filter changeSources={setSourcesList} changeTopic={setTopic} />
-      </div>
+      <Filter changeSources={setSourcesList} changeTopic={setTopic} />
       {error && <p>{error}</p>}
       {(storyList && !error) && storyList.map(story => <Article key={story.articlesId} story={story} />)}
       {(!storyList && !error) && <p>Loading...</p>}

@@ -14,6 +14,10 @@ const Filter = ({ changeSources, changeTopic }) => {
   };
 
   const [state, dispatch] = React.useReducer(filterReducer, initial_state);
+  const [showFilters, setShowFilters] = React.useState(false);
+
+  const show = showFilters ? null : "d-none";
+  const onHideShow = () => {setShowFilters(!showFilters)};
 
   const handleCheckbox = (source) => {
     const sourceCheck = state.sources.filter(elem => elem === source);
@@ -36,17 +40,22 @@ const Filter = ({ changeSources, changeTopic }) => {
   }
 
   return (
-    <Form onSubmit={onSubmit} >
-      <div className = "checkbox-container mt-3">
-        <h6>Sources: </h6>
-        {sources.map(source => <Form.Check key={source} type="checkbox" label={source} defaultChecked={true} inline onClick={() => handleCheckbox(source)} />)}
+    <React.Fragment>
+      <Button type='button' variant='accent-orange' className="mb-2" onClick={onHideShow}>Show Filters</Button>
+      <div className={show}>
+        <Form onSubmit={onSubmit} >
+          <div className = "checkbox-container mt-3">
+            <h6>Sources: </h6>
+            {sources.map(source => <Form.Check key={source} type="checkbox" label={source} defaultChecked={true} inline onClick={() => handleCheckbox(source)} />)}
+          </div>
+          <Form.Group controlId="topic" className="mt-3">
+            <Form.Label>Search By Topic</Form.Label>
+            <Form.Control type='search' placeholder='Search' value={state.topic} onChange={handleTopic} />
+          </Form.Group>
+          <Button variant='accent-orange' className="mt-3 mb-3" type='submit' block>Search</Button>
+        </Form>
       </div>
-      <Form.Group controlId="topic" className="mt-3">
-        <Form.Label>Search By Topic</Form.Label>
-        <Form.Control type='search' placeholder='Search' value={state.topic} onChange={handleTopic} />
-      </Form.Group>
-      <Button variant='accent-orange' className="mt-3 mb-3" type='submit' block>Search</Button>
-    </Form>
+    </React.Fragment>
   )
 }
 

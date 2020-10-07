@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Navigation from './../Navigation';
 import Results from './../Results';
 import Account from './../Account';
+import Archive from './../Archive';
 import * as ROUTES from '../../constants/routes';
 // import stories from '../../constants/stories';
 
@@ -36,6 +37,7 @@ const App = () => {
         <Router>
           <Navigation changeSearch={setSearch} />
           <Route exact path={ROUTES.HOME} render={() => <Results search={search} error={error} />} />
+          <Route path={ROUTES.ARCHIVE} component={Archive} />
           <Route path={ROUTES.ACCOUNT} component={Account} />
         </Router>
       </Container>

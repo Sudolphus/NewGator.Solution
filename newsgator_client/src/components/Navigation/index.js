@@ -26,6 +26,7 @@ const Navigation = ({ changeSearch }) => {
     <Navbar expand="lg">
       <Nav>
         <Nav.Link href={ROUTES.HOME}>Home</Nav.Link>
+        <Nav.Link href={ROUTES.ARCHIVE}>Search Archives</Nav.Link>
         <Nav.Link href={ROUTES.ACCOUNT}>Account</Nav.Link>
       </Nav>
       <Form className="ml-auto" inline onSubmit={onSubmit}>
