@@ -144,12 +144,12 @@ namespace NewsGator.Models
         {
           if (!multiFlag)
           {
-            commandString += $" WHERE {filterNames[i]} = @{filterNames[i]}";
+            commandString += $" WHERE {filterNames[i]} LIKE @{filterNames[i]}";
             multiFlag = true;
           }
           else
           {
-            commandString += $" AND {filterNames[i]} = @{filterNames[i]}";
+            commandString += $" AND {filterNames[i]} LIKE @{filterNames[i]}";
           }
         }
       }
@@ -170,7 +170,7 @@ namespace NewsGator.Models
       {
         if (filters[i] != null)
         {
-          cmd.Parameters.Add($"@{filterNames[i]}", MySqlDbType.VarChar).Value = $"{filters[i]}";
+          cmd.Parameters.Add($"@{filterNames[i]}", MySqlDbType.VarChar).Value = '%' + $"{filters[i]}" + '%';
         }
       }
       if (filters[3] != null)
