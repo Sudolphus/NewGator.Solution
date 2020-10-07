@@ -35,7 +35,7 @@ const Results = ({ stories, search }) => {
     return storyList;
   }
 
-  const storyList = getStoryList(stories);
+  const storyList = stories ? getStoryList(stories) : null;
 
   return (
     <React.Fragment>
@@ -44,7 +44,8 @@ const Results = ({ stories, search }) => {
       <div className={show}>
         <Filter changeSources={setSourcesList} changeTopic={setTopic} />
       </div>
-      {storyList.map(story => <Article key={story.articlesId} story={story} />)}
+      {storyList && storyList.map(story => <Article key={story.articlesId} story={story} />)}
+      {!storyList && <p>Loading...</p>}
     </React.Fragment>
   )
 }

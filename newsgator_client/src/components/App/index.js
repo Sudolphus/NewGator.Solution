@@ -18,7 +18,7 @@ const App = () => {
   }, [storyList])
 
   return (
-    <StoryContext.Provider value={stories} >
+    <StoryContext.Provider value={storyList} >
       <Container fluid>
         <Router>
           <Navigation changeSearch={setSearch} />
