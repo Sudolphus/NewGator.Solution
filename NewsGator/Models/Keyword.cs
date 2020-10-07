@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace NewsGator.Models
 {
@@ -19,7 +20,8 @@ namespace NewsGator.Models
       string buildPhrase = "";
       foreach(string word in words)
       {
-        if (File.ReadLines("C:\\Users\\pc\\Desktop\\NewGator\\NewsGator\\StopList.txt").Any(line => line.Contains(word)))
+        Regex reg = new Regex($"^{word}$");
+        if (File.ReadLines("C:\\Users\\pc\\Desktop\\NewGator\\NewsGator\\StopList.txt").Any(line => reg.IsMatch(line)))
         {
           string addPhrase = buildPhrase.Trim();
           if (addPhrase != "")
@@ -30,7 +32,7 @@ namespace NewsGator.Models
         }
         else
         {
-          buildPhrase += word;
+          buildPhrase += $" {word}";
         }
       }
       if (buildPhrase != "")

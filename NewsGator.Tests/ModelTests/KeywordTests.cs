@@ -25,5 +25,15 @@ namespace NewsGator.Tests
       List<string> results = Keyword.Keyphrase(parsePhrase);
       CollectionAssert.AreEqual(results, expectation);
     }
+
+    [TestMethod]
+    public void Keyphrase_CanCombineTheAboveMethods_PhraseArray()
+    {
+      string phrase = "Two scoops of Ice Cream";
+      string[] parsePhrase = Keyword.WordBreak(phrase);
+      List<string> results = Keyword.Keyphrase(parsePhrase);
+      List<string> expectation = new List<string>{ "scoops", "ice cream"};
+      CollectionAssert.AreEqual(results, expectation);
+    }
   }
 }
