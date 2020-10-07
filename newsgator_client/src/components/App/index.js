@@ -6,23 +6,34 @@ import Navigation from './../Navigation';
 import Results from './../Results';
 import Account from './../Account';
 import * as ROUTES from '../../constants/routes';
-import stories from '../../constants/stories';
+// import stories from '../../constants/stories';
 
 
 const App = () => {
   const [storyList, setStoryList] = React.useState(null);
   const [search, setSearch] = React.useState(null);
+  const [error, setError] = React.useState(null);
 
-  React.useEffect(() => { 
-    setStoryList(stories);
-  }, [storyList])
+  React.useEffect(() => {
+    async function getStoryList() {
+      try {
+        const response = await fetch('http://localhost:5000/api/Info/');
+        const jsonResponse = await response.json();
+        setStoryList(jsonResponse);
+        setError(null);
+      } catch(err) {
+        setError(err.message);
+      }
+    }
+    getStoryList();
+  }, []);
 
   return (
     <StoryContext.Provider value={storyList} >
       <Container fluid>
         <Router>
           <Navigation changeSearch={setSearch} />
-          <Route exact path={ROUTES.HOME} render={() => <Results search={search} />} />
+          <Route exact path={ROUTES.HOME} render={() => <Results search={search} error={error} />} />
           <Route path={ROUTES.ACCOUNT} component={Account} />
         </Router>
       </Container>

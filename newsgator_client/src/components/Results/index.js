@@ -6,7 +6,7 @@ import Filter from './../Filter';
 import sources from './../../constants/sources';
 import Button from 'react-bootstrap/Button';
 
-const Results = ({ stories, search }) => {
+const Results = ({ stories, search, error }) => {
   const [showFilters, setShowFilters] = React.useState(false);
   const [sourcesList, setSourcesList] = React.useState(sources);
   const [topic, setTopic] = React.useState(null);
@@ -44,15 +44,17 @@ const Results = ({ stories, search }) => {
       <div className={show}>
         <Filter changeSources={setSourcesList} changeTopic={setTopic} />
       </div>
-      {storyList && storyList.map(story => <Article key={story.articlesId} story={story} />)}
-      {!storyList && <p>Loading...</p>}
+      {error && <p>{error}</p>}
+      {(storyList && !error) && storyList.map(story => <Article key={story.articlesId} story={story} />)}
+      {(!storyList && !error) && <p>Loading...</p>}
     </React.Fragment>
   )
 }
 
 Results.propTypes = {
   stories: PropTypes.array,
-  search: PropTypes.string
+  search: PropTypes.string,
+  error: PropTypes.string
 }
 
 export default withStory(Results);
