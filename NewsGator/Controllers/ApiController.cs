@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NewsGator.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NewsGator.Controllers
 {
@@ -13,6 +14,8 @@ namespace NewsGator.Controllers
     {
       string[] filters = new string[4]{ filter.Source, filter.Author, filter.Date, filter.Topic };
       List<Article> articleList = Article.Find(filters);
+      articleList.Sort();
+      articleList.Reverse();
       return articleList;
     }
   }

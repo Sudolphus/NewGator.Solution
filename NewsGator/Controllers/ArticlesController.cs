@@ -17,9 +17,9 @@ namespace NewsGator.Controllers
       }
       foreach(Article article in articles)
       {
-        article.Save();
         HashSet<string> keywordsTitle = Keyword.Keyphrase(Keyword.WordBreak(article.Title));
         Keyword.Save(keywordsTitle);
+        article.Save();
       }
       return View(articles);
     }

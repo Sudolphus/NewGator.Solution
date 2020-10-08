@@ -1,10 +1,11 @@
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace NewsGator.Models
 {
-  public class Article
+  public class Article : IComparable
   {
     public int ArticlesId { get; set; }
     public string Source { get; set; }
@@ -32,6 +33,16 @@ namespace NewsGator.Models
       this.Title = valArr[1];
       this.Summary = valArr[2];
       this.Url = valArr[3];
+    }
+
+    public int CompareTo(Object obj)
+    {
+      if (obj == null)
+      {
+        return 1;
+      }
+      Article otherArticle = obj as Article;
+      return this.GetScore().CompareTo(otherArticle.GetScore());
     }
 
     public override bool Equals(System.Object otherArticle)
@@ -194,6 +205,26 @@ namespace NewsGator.Models
       List<Article> foundArticles = Article.GetArticleList(rdr);
       DB.CloseConnection(conn);
       return foundArticles;
+    }
+
+    public int GetScore()
+    {
+      HashSet<string> Keyphrases = Keyword.Keyphrase(Keyword.WordBreak(Title));
+      int total = 0;
+      foreach(string phrase in Keyphrases)
+      {
+        MySqlConnection conn = DB.OpenConnection();
+        MySqlCommand cmd = DB.CreateCommand(conn, @"SELECT * FROM keyphrases WHERE keyphrase=@keyphrase");
+        cmd.Parameters.Add("@keyphrase", MySqlDbType.VarChar).Value = phrase;
+        MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+        while (rdr.Read())
+        {
+          int count = rdr.GetInt32(2);
+          total += count;
+        }
+        DB.CloseConnection(conn);
+      }
+      return total;
     }
   }
 }
