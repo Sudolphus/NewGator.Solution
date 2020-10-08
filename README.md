@@ -28,6 +28,7 @@
 - [Built Using](#built_using)
 - [TODO](./TODO.md)
 - [Authors](#authors)
+- [Acknowledgements](#acknowledgements-)
 
 ## 🧐 About <a name = "about"></a>
 
@@ -51,22 +52,7 @@ For the back end:
 1. Start by acquiring the repo, by either clicking the download button, or running `git clone https://github.com/Sudolphus/NewsGator.Solution`
 2. You'll also need MySQL Server and .NET Framework installed (linked above)
 3. Once .NET is installed, navigate into the NewsGator directory in your terminal of choice and acquire the necessary packages with `dotnet restore`
-4. Install the schema for holding article data. If you have MySQL Workbench or similar, you can import the schema from the included `gator.sql` file. Otherwise, it can be built by running the following code in MySQL Server:
-  ```
-  CREATE_DATABASE `gator`;
-  USE `gator`;
-  DROP TABLE IF EXISTS "articles";
-  CREATE TABLE "articles" (
-  "articlesId" int NOT NULL AUTO_INCREMENT,
-  "source" varchar(255) DEFAULT NULL,
-  "author" varchar(255) DEFAULT NULL,
-  "title" varchar(255) DEFAULT NULL,
-  "summary" varchar(255) DEFAULT NULL,
-  "url" varchar(255) DEFAULT NULL,
-  "date" varchar(255) NOT NULL,
-  PRIMARY KEY ("articlesId")
-  );
-  ```
+4. Install the schema for holding article data. If you have MySQL Workbench or similar, you can import the schema from the included `gator.sql` file. Otherwise, you'll have to enter it manually to MySqlServer.
 5. You'll need to set up an EnvironmentalVariables.cs file to hold your password. You'll need to include your MySql Server password. You'll also need to get api keys for [NewsApi](https://newsapi.org/docs/get-started) and the [New York Times](https://developer.nytimes.com/). Then, create the file like this:
 ```
 namespace NewsGator.Models
@@ -82,6 +68,9 @@ namespace NewsGator.Models
 Place this file in the NewsGator/Models folder.
 
 6. You can then build the project with `dotnet build`, or run the project directly with `dotnet run`.
+7. Once the project is run, you can open it with the browser (dotnet run should make it available on localhost:5000 by default). There should then be various buttons, which will query the api in question and add the information to the database.
+8. For the front end, navigate into the the newsgator_client directory, and build the project, with `npm start` or `npm build`. Build will create a production build in the bin/ folder, which you can open in a brower, and npm start should open your browser to the relevant page automatically (localhost:3000 by default).
+9. The front end requires the back end to be running in order to make the api calls; when first loading, it should grab the top stories automatically, and then display them. The Archive page should allow you to make a more detailed api call, including results from before the previous day, if you've run the back end api call on more than one day so that there is previous data to display.
 
 
 ## 🔧 Running the tests <a name = "tests"></a>
@@ -99,3 +88,7 @@ To use the back end, start the project as listed above, then you can load up the
 ## ✍️ Authors <a name = "authors"></a>
 
 - [Micheal Hansen](https://github.com/Sudolphus) - Idea & Initial work
+
+## Acknowledgements <a name="acknowledge"></a>
+- [Ben McEvoy](https://github.com/benmcevoy/Rake) - Thank you for the list of RAKE algorithm stop words.
+- [Robin Wieruch](https://www.robinwieruch.de/) - Thank you for the education on React HOCs.
